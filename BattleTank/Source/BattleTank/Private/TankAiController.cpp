@@ -2,6 +2,8 @@
 
 #include "TankAiController.h"
 #include "Engine/World.h"
+#include "Tank.h"
+#include "../Public/Tank.h"
 #include "../Public/TankAiController.h"
 
 

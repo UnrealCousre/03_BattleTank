@@ -2,6 +2,8 @@
 
 #include "TankAimingComponent.h"
 #include "Components/ActorComponent.h"
+#include "TankBarrel.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "../Public/TankAimingComponent.h"
 
 
@@ -16,7 +18,7 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
@@ -39,10 +41,46 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
+void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
 	auto OurTankName = GetOwner()->GetName();
+	if (!Barrel) { return; }
+	FVector OutLaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	// calculate the outlaunchvelocity
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		WorldSpaceAim,
+		LaunchSpeed,
+		false,
+		0.0f,
+		0.0f,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+
+	);
+	if (bHaveAimSolution){ 
+	auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 	auto BarrelLocation = Barrel->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at Location: %s from %s"), *(OurTankName), *(WorldSpaceAim.ToString()),*(BarrelLocation.ToString()))
+	MoveBarrel(AimDirection);
+	// 
+	UE_LOG(LogTemp, Warning, TEXT("Aiming solution found"))
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Aiming solution not found"))
+	}
 }
 
+void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
+	// Work out the difference
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	Barrel->Elevate(5);
+	// Move the barrel  the right amount this frame
+	// Give a max elevation speed 
+
+}
