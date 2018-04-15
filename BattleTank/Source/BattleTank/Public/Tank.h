@@ -8,6 +8,7 @@
 
 class UTankBarrel;
 class UTankAimingComponent;
+class UTankTurret;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -20,6 +21,8 @@ public:
 	void AimAt(FVector HitLocation);
 	UFUNCTION(BlueprintCallable, Category = "setup")
 	void SetBarrelComponent(UTankBarrel* BarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = "setup")
+	void SetTurretComponent(UTankTurret * TurretToSet);
 
 protected:
 	// Called when the game starts or when spawned
@@ -30,9 +33,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	UFUNCTION(BlueprintCallable, Category = "Fire")
+	void Fire();
 	
 private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
-		float fLaunchSpeed = 100000; //tODO find sensible default
+		float fLaunchSpeed = 4000; 
 };

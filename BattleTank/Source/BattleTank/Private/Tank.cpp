@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 #include "../Public/TankAimingComponent.h"
 #include "../Public/Tank.h"
@@ -28,6 +29,10 @@ void ATank::SetBarrelComponent(UTankBarrel * BarrelToSet)
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
 
+void ATank::SetTurretComponent(UTankTurret * TurretToSet)
+{
+	TankAimingComponent->SetTurretReference(TurretToSet);
+}
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
@@ -35,6 +40,10 @@ void ATank::BeginPlay()
 	
 
 	
+}
+void ATank::Fire()
+{
+	UE_LOG(LogTemp,Warning,TEXT("FIRING"));
 }
 
 // Called every frame
