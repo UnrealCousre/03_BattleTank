@@ -73,12 +73,11 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 	auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 	auto BarrelLocation = Barrel->GetComponentLocation();
 	MoveBarrel(AimDirection);
-	// 
-	UE_LOG(LogTemp, Warning, TEXT("Aiming solution found"))
+	// UE_LOG(LogTemp, Warning, TEXT("Aiming solution found"))
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Aiming solution not found"))
+		//UE_LOG(LogTemp, Warning, TEXT("Aiming solution not found"))
 	}
 }
 
