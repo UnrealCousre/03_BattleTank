@@ -5,6 +5,7 @@
 #include "../Public/Projectile.h"
 #include "../Public/TankBarrel.h"
 #include "../Public/TankTurret.h"
+#include "../Public/TankMovementComponent.h"
 #include "../Public/TankAimingComponent.h"
 
 

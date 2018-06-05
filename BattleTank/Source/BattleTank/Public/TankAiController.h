@@ -20,6 +20,7 @@ private:
 	virtual void BeginPlay() override;
 	
 	void Tick(float DeltaTime) override;
-	
-	
+	// How close can ai get to player
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 500.0f;
 };

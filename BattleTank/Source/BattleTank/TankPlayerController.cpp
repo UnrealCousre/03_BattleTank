@@ -29,7 +29,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	// aim towards crosshair
-	//UE_LOG(LogTemp, Warning, TEXT("PLAYER CONTROLER TICKING"));
 	AimTowardsCrosshair();
 
 }

@@ -25,9 +25,11 @@ void ATankAiController::Tick(float DeltaTime)
 	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	ATank* ControlledTank = Cast<ATank>(GetPawn());
 	if (!PlayerTank) {
+		
 		UE_LOG(LogTemp, Warning, TEXT("TANK NOT FOUND"))return; }
 	else
 	{
+		MoveToActor(PlayerTank, AcceptanceRadius);
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		ControlledTank->Fire(); // TODO limit fire rate
 	}
